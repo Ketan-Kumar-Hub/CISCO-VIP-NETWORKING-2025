@@ -1,163 +1,197 @@
-CISCO-VIP-NETWORKING-2025
-🚀 Auto Topology Generation & Network Simulation Tool
+# CISCO-VIP-NETWORKING-INTERNSHIP-2025
 
-Cisco Virtual Internship Program 2025 – Networking Track
+![Python](https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white)
+![Cisco](https://img.shields.io/badge/Cisco-VIP%202025-red?logo=cisco&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-This project provides a complete solution to:
+🛰️ Auto Topology Generation & Network Simulation Tool  
+**Cisco Virtual Internship Program 2025 – Networking Problem Statement**
 
-Parse router/switch configuration files
+A powerful automation tool to parse network configurations, generate topologies, validate setups, and simulate network performance & failures.
 
-Automatically generate a hierarchical network topology
+---
 
-Validate network setups & optimize them
+## 📖 Overview
+This project automates the end-to-end process of network topology creation and simulation.  
+It parses router, switch, and endpoint configurations, constructs a hierarchical topology, validates configuration compliance with industry best practices, and tests performance through detailed simulations.
 
-Run Day-1 & Day-2 simulations including fault injection
+The solution is designed to meet all **Cisco Internship Tool Requirements** and provides an optimized framework for modern network design, troubleshooting, and scalability analysis.
 
-📌 Overview
+---
 
-Currently, no automated solution exists to generate a full topology from individual router configs.
-This tool builds such a topology, validates configurations, and tests real-world scenarios like link failures and load balancing.
+## ✨ Key Features
 
-🔑 Key Features
+### 🔹 Auto Topology Generation
+- Parses `.txt` configuration files for routers, switches, and PCs.  
+- Extracts:  
+  - Interface details (IPv4 addressing, MTU, bandwidth)  
+  - Routing protocols (OSPF, BGP)  
+  - VLAN configurations  
+  - Link relationships  
+- Builds an accurate hierarchical network topology.  
+- Generates visual layout from extracted data.  
 
-Auto Topology Generation
+### 🔹 Configuration Validation & Optimization
+- Detects:  
+  - Missing configuration components  
+  - Duplicate IP addresses in subnet  
+  - VLAN inconsistencies  
+  - Incorrect gateway assignments  
+  - MTU mismatches  
+  - Network loops  
+- Suggests:  
+  - Routing protocol changes (e.g., OSPF → BGP for scalability)  
+  - Node aggregation opportunities  
 
-Reads configs of routers & switches
+### 🔹 Load Management & Traffic Awareness
+- Analyzes bandwidth usage from configs.  
+- Estimates traffic loads per application type.  
+- Flags overloaded links & suggests balancing.  
+- Provides fallback paths for low-priority traffic.  
 
-Extracts IPs, VLANs, gateways, protocols (OSPF/BGP), MTU etc.
+### 🔹 Simulation & Fault Injection
+**Day-1 Simulation Includes:**  
+- Device bring-up  
+- ARP table population  
+- OSPF/BGP neighbor discovery  
+- MTU mismatch impact testing  
 
-Builds a hierarchical graph of the network
+**Day-2 Simulation Includes:**  
+- Link failure injection & recovery  
+- Routing table reconvergence  
+- Compliance checks (31 tests in current run)  
+- Performance degradation analysis  
 
-Configuration Validation
+### 🔹 Advanced Simulation Engine
+- Multithreaded architecture (each network element runs in parallel).  
+- IPC communication using TCP/FIFO sockets.  
+- Pause and Resume simulation on demand.  
+- Per-node logging for complete visibility.  
 
-Detects:
+---
 
-Missing switch configs
+## 📁 Repository Structure
+📦 CISCO-VIP-NETWORKING-INTERNSHIP-2025
+┣ 📂 Config/ # Input configuration files
+┃ ┣ R1.txt
+┃ ┣ S1.txt
+┃ ┗ ...
+┣ 📂 simulation_engine/ # Simulation core logic
+┣ 📂 topology_generator/ # Parser and graph builder
+┣ 📂 validation_module/ # Rules and optimization checks
+┣ 📂 reports/ # Generated analysis & results
+┣ main.py # Entry point
+┣ requirements.txt # Python dependencies
+┗ README.md # Documentation
 
-Duplicate IPs
+---
 
-Wrong VLAN labels
+## 🔧 Installation
 
-Incorrect gateway addresses
+**Requirements:**  
+- Python 3.9+  
+- pip package manager  
 
-MTU mismatches & loops
-
-Suggests optimizations (e.g., use BGP instead of OSPF)
-
-Load Management
-
-Checks bandwidth vs traffic load
-
-Flags overloaded links
-
-Recommends load balancing / alternate paths
-
-Simulation & Fault Injection
-
-Day-1: ARP, neighbor discovery, OSPF discovery
-
-Day-2: Link failure simulation & recovery tests
-
-Pause & Resume simulation feature
-
-Implementation Architecture
-
-Multithreaded (routers & switches as threads)
-
-IPC via FIFO / TCP sockets for metadata packets
-
-Node-level statistics & logs maintained
-
-📂 Repository Structure
-CISCO-VIP-NETWORKING-2025/
-├── Config/                 # Input config files (e.g., R1.txt, S1.txt)
-├── topology_generator/     # Code for topology parsing & building
-├── validation_module/      # Config validation & optimization
-├── simulation_engine/      # Day-1 & Day-2 simulation logic
-├── reports/                # Generated outputs (logs, reports, graphs)
-├── main.py                 # Entry point of the tool
-├── requirements.txt        # Python dependencies
-└── README.md               # Documentation (this file)
-
-⚙️ Installation
-# Clone this repository
+```bash
+# Clone Repository
 git clone https://github.com/Ketan-Kumar-Hub/CISCO-VIP-NETWORKING-2025.git
 cd CISCO-VIP-NETWORKING-2025
 
-# Install dependencies
+# Install Dependencies
 pip install -r requirements.txt
+🚀 Usage
+1️⃣ Prepare Configuration Files
 
+Place device configs in the Config/ directory.
 
-✅ Requires Python 3.9+
+Sample configs can be added manually.
 
-▶️ Usage
-
-Place your router/switch configs inside Config/ folder
-
-Generate Topology
-
+2️⃣ Generate Network Topology
 python main.py --generate-topology
+Outputs:
 
+reports/network_topology_<timestamp>.html (Interactive Graph)
 
-Validate Configurations
+JSON topology data
 
+3️⃣ Validate Configurations
 python main.py --validate-config
+4️⃣ Run Simulations
 
-
-Run Simulations
-
-Day-1:
-
+Day-1 Simulation
 python main.py --simulate --day 1
-
-
-Day-2 (Fault Injection):
-
 python main.py --simulate --day 2
-
-
-Pause/Resume Simulation
-
+5️⃣ Pause / Resume Simulation
 python main.py --pause
 python main.py --resume
 
-📊 Example Outputs
+📊 Example Output
 
-Interactive HTML topology diagram
+Network Bring-Up
+✔ All devices up and stable
+✔ ARP tables populated
+✔ OSPF/BGP neighbors formed
 
-Validation report (issues + suggestions)
+Day-2 Tests
 
-Simulation logs (Day-1 & Day-2)
+Total tests: 31
 
-Fault injection results with recovery details
+Pass: 85
 
-✅ Cisco Internship Requirements Covered
+Fail: 10
 
-Hierarchical topology generation
+Warnings: 5
 
-Bandwidth & load validation
+Example Fault Injection:
 
-Load balancing recommendations
+Broken link R1 ↔ R2 → Network uptime maintained
 
-Missing component detection
+Broken link R1 ↔ S1 → Automatic path adaptation
 
-Duplicate IPs / VLAN / gateway issue detection
+Reports Generated:
 
-MTU mismatch & loop detection
+JSON detailed analysis
 
-Routing protocol recommendations (BGP vs OSPF)
+Interactive HTML topology
 
-Day-1 & Day-2 simulation with fault injection
+Per-node simulation logs
 
-Pause/Resume capability
+✅ Cisco Internship Compliance
 
-Multithreaded + IPC-based architecture
+✔ Hierarchical topology creation
+✔ Bandwidth analysis & capacity verification
+✔ Load-balancing strategy recommendation
+✔ Missing component detection
+✔ Configuration checks & duplicate IP detection
+✔ VLAN & gateway validation
+✔ Routing protocol recommendations
+✔ MTU mismatch and network loop detection
+✔ Day-1 & Day-2 scenario execution
+✔ Fault injection testing & recovery analysis
+✔ Pause/Resume live simulation
+✔ Multithreaded architecture with IPC
 
-👨‍💻 Author
+🤝 Contributing
 
-Ketan Kumar Vishwakarma
-(Cisco Virtual Internship Program 2025 – Networking Stream)
+Fork the repository
+
+Create a feature branch:
+git checkout -b feature-name
+
+Commit changes:
+git commit -m "Description"
+
+Push branch:
+git push origin feature-name
+
+Create a Pull Request
 
 📜 License
 
-This project is under the MIT License – feel free to use & improve.
+This project is licensed under the MIT License – see LICENSE file for details.
+
+📬 Contact
+
+Developer: Ketan Kumar Vishwakarma
+📧 Email: ketanvofficial@gmail.com
